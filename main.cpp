@@ -339,14 +339,16 @@ extern "C" void* ThreadStats(void*) {
   } while(1);
 }
 
-static const string mainnet_seeds[] = {"104.131.125.97", "103.19.252.82", "178.62.247.76", "104.131.66.88", ""};
+static const string mainnet_seeds[] = {"104.131.125.97", "103.19.252.82", "178.62.247.76", "104.131.66.88", "104.236.152.29"};
 static const string testnet_seeds[] = {""};
 static const string *seeds = mainnet_seeds;
 
 extern "C" void* ThreadSeeder(void*) {
-  // if (!fTestNet){
-  //   db.Add(CService("kjy2eqzk4zwi5zd3.onion", 8333), true);
-  // }
+  if (!fTestNet){
+    // There is no Onion host yet for seeding darknet clients. !! Use <site>.onion:33442 !!
+    // db.Add(CService("kjy2eqzk4zwi5zd3.onion", 8333), true);
+    db.Add(CService("104.236.152.29", 29948), true);
+  }
   do {
     for (int i=0; seeds[i] != ""; i++) {
       vector<CNetAddr> ips;
